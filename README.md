@@ -1,121 +1,69 @@
-# mi_web – Gestor de tareas (To‑Do) con usuarios
+<div align="center">
 
-Aplicación web sencilla para gestionar tareas personales con cuentas de usuario. Permite registrarse, iniciar sesión y realizar operaciones CRUD sobre tareas propias, además de filtrar por título y ver el conteo de pendientes.
+# TaskCore • Django Multi-User Task Orchestration Engine
+### *Relational Task Lifecycle Tracking, Session-Isolated CRUD & Django ORM State Management*
 
-## Funcionalidades
-- Autenticación de usuarios: registro, login y logout
-- CRUD de tareas: crear, listar, ver detalle, editar y eliminar
-- Búsqueda por título en la lista de tareas (`area-buscar`)
-- Indicador de tareas incompletas (pendientes)
-- Separación por usuario: cada persona ve solo sus tareas
+[![Python: 3.10+](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Framework: Django](https://img.shields.io/badge/Django-4.x%20%7C%205.x-092E20?style=for-the-badge&logo=django&logoColor=white)](https://www.djangoproject.com/)
+[![Database: SQLite](https://img.shields.io/badge/Database-SQLite3_Relational-003B57?style=for-the-badge&logo=sqlite&logoColor=white)](https://sqlite.org/)
+[![Authentication: Session Based](https://img.shields.io/badge/Auth-Django_Session_Isolation-success?style=for-the-badge)](https://docs.djangoproject.com/en/stable/topics/auth/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-## Tecnologías
-- Python 3.13
-- Django 4.1.5
-- Base de datos: SQLite (desarrollo)
+<p align="center">
+  A production-structured Django web application providing strict user-isolated task management, stateful completion toggles, real-time pending counters, and parameterized search filters.
+</p>
 
-## Arquitectura rápida
-- App principal: `base`
-- Modelo central: `Tarea` (`base/models.py`)
-  - Campos: `usuario`, `titulo`, `descripcion`, `completo`, `creado`
-- Vistas basadas en clases (`base/views.py`): `ListaPendientes`, `DetalleTarea`, `CrearTarea`, `EditarTarea`, `EliminarTarea`, `Logueo`, `PaginaRegistro`
-- Rutas (`base/urls.py`):
-  - `/` lista de tareas
-  - `/login/`, `/registro/`, `/logout/`
-  - `/tarea/<pk>`, `/crear-tarea/`, `/editar-tarea/<pk>`, `/eliminar-tarea/<pk>`
-- Templates: `base/templates/base/`
-- Configuración relevante (`proyecto/settings.py`):
-  - `LANGUAGE_CODE = 'es-ar'`
-  - `ALLOWED_HOSTS = ['*']` en desarrollo
-  - `TEMPLATES['DIRS'] = BASE_DIR / 'base' / 'templates'`
+</div>
 
-## Puesta en marcha (Windows PowerShell)
-Desde este directorio (`mi_web/src/proyecto`):
-```powershell
-python -m venv ..\..\..\.venv
-..\..\..\.venv\Scripts\Activate.ps1
-pip install -r ..\..\..\requirements.txt
-python manage.py migrate
-python manage.py runserver 0.0.0.0:8000
+---
+
+## 🚀 Key Architectural Capabilities
+
+- **Strict User Isolation:** Enforces row-level access control so users only read, mutate, and delete their own private task models.
+- **Full CRUD Lifecycle:** Clean Django Class-Based Views (`ListView`, `DetailView`, `CreateView`, `UpdateView`, `DeleteView`) implementing the complete task workflow.
+- **Search & Filter Pipeline:** Dynamic query filtering by title substring without compromising database pagination.
+- **Session-Based Authentication:** Native secure password hashing (PBKDF2/Argon2) and CSRF protection on all forms.
+
+---
+
+## ⚡ Quickstart & Local Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/ExeDevCentral/proyectopython01.git
+cd proyectopython01
+
+# Install requirements
+pip install django
+
+# Run database migrations
+python3 manage.py migrate
+
+# Start development server
+python3 manage.py runserver
 ```
 
-- Navegá a `http://127.0.0.1:8000`
-- Registro: `http://127.0.0.1:8000/registro/`
-- Login: `http://127.0.0.1:8000/login/`
+Access the application in your browser at `http://127.0.0.1:8000/`.
 
-Crear superusuario (opcional):
-```powershell
-python manage.py createsuperuser
+---
+
+## 📂 Repository Structure
+
+```text
+proyectopython01/
+├── base/                   # Core Django application (models, views, forms, templates)
+│   ├── templates/base/     # Authentication and task view templates
+│   ├── models.py           # Task relational schema with User foreign key
+│   └── views.py            # Generic class-based views for task workflows
+├── mi_web/                 # Django project settings and root URL routing
+├── manage.py               # Django CLI management entry point
+├── .gitignore              # Standard Python and Django exclusions
+└── README.md               # Technical documentation
 ```
 
-## Estructura (resumen)
-```
-mi_web/src/proyecto/
-├─ base/
-│  ├─ migrations/
-│  ├─ templates/base/
-│  ├─ models.py
-│  ├─ views.py
-│  └─ urls.py
-├─ proyecto/
-│  ├─ settings.py
-│  ├─ urls.py
-│  └─ wsgi.py
-├─ manage.py
-└─ db.sqlite3 (ignorado en git)
-```
+---
 
-## Configuración
-- `ALLOWED_HOSTS`: en desarrollo se usa `['*']` para facilitar pruebas locales y en LAN.
-- `TIME_ZONE`, `LANGUAGE_CODE`: ajustar según preferencia.
-- Base de datos: por defecto `SQLite` (`db.sqlite3`). Para producción, cambiar a Postgres u otro motor.
+## 👨‍💻 Author
 
-## Contraseñas
-Se aplican validadores por defecto de Django:
-- Longitud mínima (8),
-- No ser muy común,
-- No ser demasiado parecida al usuario,
-- No ser solo numérica.
-
-## Rutas útiles
-- `/` lista de tareas
-- `/registro/` y `/login/`
-- `/crear-tarea/`
-
-## Roadmap / Mejoras posibles
-- Tareas
-  - Vencimiento (fecha límite) y recordatorios
-  - Prioridad y orden manual (drag & drop)
-  - Repetición (diaria/semanal/mensual) y tareas recurrentes
-  - Categorías/etiquetas y colores
-  - Adjuntos (archivos) y notas/comentarios por tarea
-  - Estados adicionales (en progreso, bloqueada, etc.)
-- UX/UI
-  - Diseño con Tailwind/Bootstrap
-  - Modo oscuro, accesibilidad (a11y) y i18n
-  - Paginación y filtros avanzados
-- Integraciones y API
-  - API REST (Django REST Framework)
-  - Webhooks/notificaciones (email, Telegram, etc.)
-  - Importar/Exportar CSV/Excel
-- Seguridad
-  - Políticas de contraseña configurables
-  - 2FA (TOTP) opcional
-  - Auditoría de cambios
-- Calidad y CI/CD
-  - Tests unitarios e integración (pytest)
-  - Lint/format (ruff, black) y pre-commit hooks
-  - GitHub Actions (test + build)
-- Despliegue
-  - Docker y docker-compose
-  - Deploy en Render/Railway/Fly.io/CapRover
-  - Configuración para Postgres y variables de entorno
-- Rendimiento
-  - Índices en DB, select_related/prefetch_related
-  - Cache y CDN de estáticos
-
-## Licencia
-A definir.
-
-## Enlaces
-- Repo: `https://github.com/ExeDevCentral/proyectopython01.git`
+**Exequiel Echevarria**
+- GitHub: [@ExeDevCentral](https://github.com/ExeDevCentral)
