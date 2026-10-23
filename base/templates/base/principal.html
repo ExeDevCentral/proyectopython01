@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <title>Lista de Pendientes</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -136,7 +137,42 @@
         .cuerpo-tarjeta {
             padding: 20px;
         }
-    }
+
+        /* Mobile Responsive Adjustments */
+        @media (max-width: 600px) {
+            body {
+                padding-top: 15px;
+                padding-left: 8px;
+                padding-right: 8px;
+            }
+            .container {
+                max-width: 100%;
+                border-radius: 12px;
+                overflow: hidden;
+            }
+            .barra-superior {
+                padding: 12px 14px;
+                font-size: 0.95rem;
+            }
+            .envoltorio-tarea {
+                padding: 14px 12px;
+            }
+            input[type=text],
+            input[type=password],
+            textarea {
+                width: 100% !important;
+                box-sizing: border-box;
+                min-height: 44px;
+                font-size: 16px;
+            }
+            .boton {
+                width: 100%;
+                min-height: 44px;
+                display: block;
+                text-align: center;
+                box-sizing: border-box;
+            }
+        }
 
     </style>
 </head>
