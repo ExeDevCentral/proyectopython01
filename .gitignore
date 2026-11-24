@@ -27,3 +27,6 @@ staticfiles/
 # OS artifacts
 .DS_Store
 Thumbs.db
+
+# Local environment and build artifacts
+*.log
